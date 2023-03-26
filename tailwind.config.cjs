@@ -12,6 +12,7 @@ module.exports = {
         'red': '#FF3030',
         'plum': '#FFE0B3',
         'gray': '#2A414F',
+        'gray-light': '#95A0A7',
       },
     },
   },
