@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import Product from '../Product/Product';
 import Cart from '../Cart/Cart';
-import { addToDb, getShoppingCart } from '../../utilities/fakedb';
+import { addToDb, deleteShoppingCart, getShoppingCart } from '../../utilities/fakedb';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
 
 const Shop = () => {
     const [products, setProducts] = useState([]);
@@ -45,15 +48,34 @@ const Shop = () => {
         addToDb(product.id);
     }
 
+    const clearCart = () => {
+        console.log("js");
+        setCart([]);
+        deleteShoppingCart()
+    }
+
     return (
         <div className='md:grid grid-cols-2 lg:grid-cols-6'>
             <div className='lg:col-span-5 md:p-8 lg:p-16'>
                 <div className='grid lg:grid-cols-3 gap-4 lg:gap-8'>
-                    {products.map(product => <Product product={product} key={product.id} handleAddToCard={handleAddToCard}></Product>)}
+                    {products.map(product => <Product
+                        product={product}
+                        key={product.id}
+                        handleAddToCard={handleAddToCard}
+                    ></Product>)}
                 </div>
             </div>
+
             <div className='h-max sticky top-16 mt-16'>
-                <Cart cart={cart}></Cart>
+                <Cart
+                    cart={cart}
+                    clearCart={clearCart}
+                >
+                    <Link to={'/orders'} className='bg-orange w-full rounded text-white px-6 py-2'>
+                        Review Order
+                        <FontAwesomeIcon className='ml-2' icon={faArrowRight} />
+                    </Link>
+                </Cart>
             </div>
         </div>
     );
