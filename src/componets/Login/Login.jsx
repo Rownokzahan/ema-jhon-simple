@@ -1,13 +1,39 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FcGoogle } from "react-icons/fc";
+import { AuthContext } from '../../providers/AuthProvider';
 
 const Login = () => {
+
+    const [errorMessage, setErrorMessage] = useState('');
+    const { logIn } = useContext(AuthContext)
+
+    const handleLogin = (event) => {
+        event.preventDefault();
+        setErrorMessage('');
+
+        const form = event.target;
+        const email = form.email.value;
+        const password = form.password.value;
+
+        logIn(email, password)
+            .then(userCredential => {
+                const user = userCredential.user;
+                form.reset();
+            })
+            .catch(error => {
+                setErrorMessage(error.message);
+            })
+    }
+
     return (
         <div className='my-10 mx-auto sm:w-96'>
             <div className='text-gray p-4 md:p-10 rounded-md border border-gray-light relative bg-white'>
-                <h3 className='text-3xl mb-8 text-center'>Login</h3>
-                <form>
+                <h3 className='text-3xl text-center'>Login</h3>
+
+                <p className='text-red text-center mt-8 mb-4'>{errorMessage}</p>
+
+                <form onSubmit={handleLogin}>
                     <div className='flex flex-col gap-2'>
                         <label className='pl-2' htmlFor="email">Email</label>
                         <input type="email" name='email' id='email' className='w-full rounded p-2 border border-gray-light outline-0' />
@@ -27,7 +53,7 @@ const Login = () => {
                 </div>
 
                 <button className='w-full rounded p-2 border border-gray-light flex items-center justify-center'>
-                    <FcGoogle className='w-6 h-6 mr-2'/>
+                    <FcGoogle className='w-6 h-6 mr-2' />
                     Continue With Google
                 </button>
 

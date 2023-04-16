@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { FcGoogle } from 'react-icons/fc';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../providers/AuthProvider';
 
 const SignUp = () => {
 
     const [errorMessage, setErrorMessage] = useState('');
+    const { signUp } = useContext(AuthContext)
 
     const handleSignUp = (event) => {
         event.preventDefault();
@@ -15,8 +17,6 @@ const SignUp = () => {
         const password = form.password.value;
         const confirmPassword = form.confirm_password.value;
 
-        console.log(email, password, confirmPassword);
-
         if (password !== confirmPassword) {
             setErrorMessage('Passwords do not match');
             return;
@@ -26,6 +26,15 @@ const SignUp = () => {
             setErrorMessage('Password can not be less than 6 characters');
             return;
         }
+
+        signUp(email, password)
+            .then(userCredential => {
+                const user = userCredential.user;
+                form.reset();
+            })
+            .catch(error => {
+                setErrorMessage(error.message);
+            })
     }
 
     return (
