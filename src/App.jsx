@@ -4,7 +4,7 @@ import Shop from './componets/Shop/Shop';
 
 const App = () => {
   return (
-    <div>
+    <div className='font-sans'>
       <Header></Header>
       <Shop></Shop>
     </div>
