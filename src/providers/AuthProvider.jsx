@@ -8,11 +8,13 @@ export const AuthContext = createContext(null)
 const AuthProvider = ({ children }) => {
 
     const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     //user auth state ovserver
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, CurrentUser => {
-            setUser(CurrentUser)
+            setUser(CurrentUser);
+            setLoading(false);
         });
 
         //stop observing during unmount
@@ -22,17 +24,19 @@ const AuthProvider = ({ children }) => {
     },[])
 
     const signUp = (email, password) => {
+        setLoading(true);
         return createUserWithEmailAndPassword(auth, email, password);
     }
 
     const logIn = (email, password) => {
+        setLoading(true);
         return signInWithEmailAndPassword(auth, email, password);
     }
 
     const logOut = () => {
+        setLoading(true);
         signOut(auth)
             .then(() => {
-                console.log("succesfully logged out");
                 setUser(null);
              })
             .catch(error => {
@@ -42,6 +46,7 @@ const AuthProvider = ({ children }) => {
 
     const authInfo = {
         user,
+        loading,
         signUp,
         logIn,
         logOut,

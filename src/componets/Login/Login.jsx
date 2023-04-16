@@ -1,12 +1,18 @@
 import React, { useContext, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FcGoogle } from "react-icons/fc";
 import { AuthContext } from '../../providers/AuthProvider';
+import { RiEyeFill, RiEyeOffFill } from "react-icons/ri";
 
 const Login = () => {
 
+    const [displayPassword, setDisplayPassword] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
+
     const { logIn } = useContext(AuthContext)
+    const location = useLocation();
+    const navigate = useNavigate();
+    const from = location?.state?.from?.pathname || '/';
 
     const handleLogin = (event) => {
         event.preventDefault();
@@ -20,6 +26,7 @@ const Login = () => {
             .then(userCredential => {
                 const user = userCredential.user;
                 form.reset();
+                navigate(from, { replace: true });
             })
             .catch(error => {
                 setErrorMessage(error.message);
@@ -40,7 +47,17 @@ const Login = () => {
                     </div>
                     <div className='flex flex-col gap-2 mt-4'>
                         <label className='pl-2' htmlFor="password">Password</label>
-                        <input type="password" name='password' id='password' className='w-full rounded p-2 border border-gray-light outline-0' />
+
+                        <div className='relative'>
+                            <input type={displayPassword ? "text" : "password" } name='password' id='password' className='w-full rounded p-2 pr-8 border border-gray-light outline-0' />
+
+                            <div className='absolute pr-2 right-0 top-1/2 transform -translate-y-1/2 w-max'>                                
+                                {displayPassword ?
+                                    <RiEyeOffFill onClick={() => setDisplayPassword(!displayPassword)} />
+                                    : <RiEyeFill onClick={() => setDisplayPassword(!displayPassword)} />
+                                }                                
+                            </div>
+                        </div>                        
                     </div>
 
                     <button type='submit' className='bg-plum mt-8 text-dark-gray font-semibold w-full p-4 rounded-md' >Login</button>
