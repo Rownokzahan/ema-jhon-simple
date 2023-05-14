@@ -13,7 +13,7 @@ const Orders = () => {
     const [cart, setCart] = useState(data);
 
     const deleteCartItem = (id) => {
-        const remaining = cart.filter(item => item.id !== id);
+        const remaining = cart.filter(item => item._id !== id);
         setCart(remaining);
         removeFromDb(id);
     }
@@ -28,7 +28,7 @@ const Orders = () => {
         <div className='grid md:grid-cols-2 gap-10'>
             <div className='grid gap-5'>
                 {cart.map(item => <ReviewItem
-                    key={item.id}
+                    key={item._id}
                     item={item}
                     deleteCartItem={deleteCartItem}
                 ></ReviewItem>)}

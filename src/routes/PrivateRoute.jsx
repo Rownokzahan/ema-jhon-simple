@@ -13,7 +13,7 @@ const PrivateRoute = ({ children }) => {
                 <div className='flex text-7xl items-end'>
                     L
                     <div
-                        className="h-9 w-9 mb-2 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+                        className="h-9 w-9 mb-2 animate-spin rounded-full border-4 bqqorder-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
                         role="status">
                     </div>
                     ding...

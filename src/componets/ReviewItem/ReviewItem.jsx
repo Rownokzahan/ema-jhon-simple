@@ -4,7 +4,7 @@ import React from 'react';
 
 const ReviewItem = (props) => {
     
-    const { id, img, name, price, quantity } = props.item;
+    const { _id, img, name, price, quantity } = props.item;
 
     return (
         <div className='p-2 rounded border border-gray-light flex flex-col md:flex-row justify-between items-center gap-4'>
@@ -19,7 +19,7 @@ const ReviewItem = (props) => {
             </div>
 
             <div className='w-max text-center'>
-                <button onClick={() => props.deleteCartItem(id)} className='text-red bg-[#eb57574d] w-full rounded-full'>
+                <button onClick={() => props.deleteCartItem(_id)} className='text-red bg-[#eb57574d] w-full rounded-full'>
                     <FontAwesomeIcon className='text-2xl p-4 px-5' icon={faTrashCan} />
                 </button>
             </div>
